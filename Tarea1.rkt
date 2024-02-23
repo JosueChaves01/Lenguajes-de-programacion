@@ -1,0 +1,31 @@
+(define (CalcInteres cap I N)
+  (cond ((equal? 0 N)
+         (display cap))
+        
+        (else (CalcInteres (* cap (+ I 1)) I (- N 1)))
+        )
+  )
+
+(define (merge lista1 lista2)
+  (cond ((null? lista1) (sort lista2 <))
+        ((null? lista2) (sort lista1 <))
+        (else (sort (append lista1 lista2) <)
+              )
+        )
+  )
+
+(define (sub-conjunto? lista1 lista2)
+  (cond
+    ((null? lista1) #t)
+    ((member (car lista1) lista2)
+     (sub-conjunto? (cdr lista1) lista2))
+    (else #f))
+  )
+
+(define (eliminar-elemento E  L)
+  (cond ((null? L) lista)
+        ((equal? E (car L)) (cdr L))
+        (else (cons (car L)(eliminar-elemento E (cdr L)))
+              )
+        )
+  )
