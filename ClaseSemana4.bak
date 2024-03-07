@@ -1,0 +1,40 @@
+(define listaProductos '(("Arroz" 10 1800) ("Pan" 5 1300)))
+;/ cons aniade elementos a una lista al principio
+(define (agregarProducto nombre cantidad precio lista)
+  (cond ((null? lista)
+         (list (list nombre cantidad precio)))
+        ((equal? nombre (caar lista))
+         (cons (list
+                (caar lista)
+                (+ (list-ref (car lista) 1) cantidad)
+                precio)
+               (cdr lista)))
+        (else (cons (car lista) (agregarProducto nombre cantidad precio (cdr lista))))))
+
+
+(define (venderProducto lista nombre cantidad)
+  (cond ((null? lista)
+         (display "No existe producto para vender\n")
+         lista)
+        ((equal? nombre (caar lista))
+         (let ((nueva-cantidad (- (list-ref (car lista) 1) cantidad)))
+           (if (>= nueva-cantidad 0)
+               (cons (list
+                      (caar lista)
+                      nueva-cantidad
+                      (caddr (car lista)))
+                     (cdr lista))
+               (begin
+                 (display "No hay suficiente cantidad para vender\n")
+                 lista))))
+        (else
+         (cons (car lista)
+               (venderProducto (cdr lista) nombre cantidad)))))
+
+
+
+(define (existenciasMinimas lista cantidad)
+  (filter (lambda (x) (<= (cadr x) cantidad))
+          lista))
+
+
